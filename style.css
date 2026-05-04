@@ -1,0 +1,109 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+html, body{
+    height: 100%;
+    width: 100%;
+}
+:root{
+    /*Background Color*/
+    --bg-btn-color: #6c5ce7;
+    /*Tect Color*/
+    --text-primary-color: #f0f0f0;
+    /*Spacing Variablr*/
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+    --space-2xl: 40px;
+    --space-3xl: 48px;
+    /*Border radius*/
+    --border-radius-xl:4px;
+    --border-radiud-sm:8px;
+    --border-radiud-md:12px;
+    --border-radiud-lg:16px;
+    --border-radiud-xl:20px;
+    --border-radiud-2xl:24px;
+}
+
+body {
+  background: radial-gradient(circle at center, #1a1f3c, #05060f 80%);
+  min-height: 100vh;
+  color: var(--text-primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/*Screen*/
+.screen{
+    display: none;
+    text-align: center;
+}
+.screen.active{
+    display: block;
+}
+/*button*/
+.btn{
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    margin: 10px;
+    background: var(--bg-btn-color);
+    color: var(--text-primary-color);
+    cursor: pointer;
+    transition:  all 0.25s ease;
+}
+.btn:hover {
+    background: #6c5ce7;
+    box-shadow: 0 0 10px #00ffc6, 0 0 20px #00ffc6;
+    transform: translateY(-2px);
+}
+
+/* GAME SCREEN LAYOUT */
+.game-screen {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+
+    padding-top: 80px; /* reserve space for logo */
+}
+
+/* 🔥 LOGO TOP-LEFT */
+.logo {
+    position: absolute;
+    top: 5px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo img {
+    width: 45px;
+}
+
+/* Center rest content nicely */
+.infos {
+    display: flex;
+    justify-content: space-between;
+}
+
+.game {
+    margin-top: 30px;
+    line-height: 35px;
+    height: 105px;
+    overflow: hidden;
+}
+.words {
+    display: block;
+    word-break: break-word;
+}
+.words .word {
+    display: inline;
+    margin-right: 10px;
+}
+

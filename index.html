@@ -7,7 +7,65 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
+    <main class="game-container">
+        <!--Start Screen-->
+        <section id="start-screen" class="screen">
+            <h1>Typing Speed Game</h1>
+            <p>Type words before time runs out!</p>
+            <button class="start-btn btn">Start Game</button>
+            <button class="how-btn btn">How to Play</button>
+        </section>
 
+         <!-- HOW TO PLAY -->
+        <section id="how-screen" class="screen">
+            <h2>How to Play</h2>
+            <ul>
+                <li>Type the word shown</li>
+                <li>Press Enter to submit</li>
+                <li>Wrong word = lose life</li>
+                <li>Score increases with speed</li>
+            </ul>
+            <button class="back-btn btn">Back</button>
+        </section>
+
+        <!-- GAMEPLAY -->
+         <section id="game-screen" class="screen game-screen">
+            
+            <div class="logo">
+                <a href=""><img src="./assets/Logo.png" alt="logo"></a>
+                <h2>KeyBlitz</h2>
+            </div>
+
+            <div class="infos">
+                <div class="info">
+                    <h3>Score: <span id="score">0</span></h3>
+                </div>
+                <div class="info">
+                    <h3>Time: <span id="time">00:00</span></h3>
+                </div>
+                <div class="info">
+                    <h3>Level: <span id="level">1</span></h3>
+                </div>
+            </div>
+            
+            <div class="game">
+                <div class="words"></div>
+                <div class="cursor"> </div>
+            </div>
+            
+         </section>
+
+        <!-- GAME OVER -->
+        <section id="game-over-screen" class="screen active">
+            <h2>Game Over</h2>
+            <p>Score: <span id="final-score"></span></p>
+            <p>Accuracy: <span id="accuracy"></span>%</p>
+            <p>Level Reached: <span id="final-level"></span></p>
+            <p>High Score: <span id="high-score"></span></p>
+            <button class="restart-btn btn">Play Again</button>
+        </section>
+
+    </main>
     <script src="./script.js"></script>
 </body>
 </html>
