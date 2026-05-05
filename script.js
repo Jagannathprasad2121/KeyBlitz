@@ -66,10 +66,16 @@ let score = 0;
 let isGameActive = false;
 let time = 60;
 let timerInterval;
+let totalTyped = 0;
+let totalCorrect = 0;
+let level = 1;
+let wordsTyped = 0;
 
 function formatTime(t){
+    const min = Math.floor(t / 60);
     const sec = t % 60;
-    return `00:${sec < 10 ? '0' : ''}${sec}`;
+
+    return `${min < 10 ? '0' : ''}${min}:${sec < 10 ? '0' : ''}${sec}`;
 }
 function startTimer(){
     clearInterval(timerInterval); // 🔥 prevent multiple timers
@@ -91,11 +97,18 @@ function resetGame(){
     currentWordIndex = 0;
     currentLetterIndex = 0;
     isGameActive = true;
+    totalTyped = 0;
+    totalCorrect = 0;
+    level = 1;
+    wordsTyped = 0;
 
+    document.getElementById('final-level').textContent = level;
     document.getElementById('score').textContent = score;
     document.getElementById('time').textContent = formatTime(time);
 
     newGame();
+    startTimer();
+    setTimeout(moveCursor, 100);
 }
 function endGame(){
     isGameActive = false;
@@ -104,10 +117,50 @@ function endGame(){
     gameOverScreen.classList.add('active');
 
     document.getElementById('final-score').textContent = score;
+    const accuracy = totalTyped === 0 ? 0 : Math.floor((totalCorrect / totalTyped) * 100);
+    document.getElementById('accuracy').textContent = accuracy;
+
+    document.getElementById('final-level').textContent = level;
+
+    let highScore = localStorage.getItem('highScore') || 0;
+
+    if(score > highScore){
+        highScore = score;
+        localStorage.setItem('highScore', highScore);
+    }
+
+    document.getElementById('high-score').textContent = highScore;
+}
+function moveCursor(){
+    const wordElements = document.querySelectorAll('.word');
+    const currentWord = wordElements[currentWordIndex];
+
+    if(!currentWord) return;
+
+    const letters = currentWord.querySelectorAll('.letter');
+    let letter = letters[currentLetterIndex];
+
+    const cursor = document.querySelector('.cursor');
+    const gameRect = document.querySelector('.game').getBoundingClientRect();
+
+    if(letter){
+        const rect = letter.getBoundingClientRect();
+
+        cursor.style.left = (rect.left - gameRect.left) + 'px';
+        cursor.style.top = (rect.top - gameRect.top) + 'px';
+
+    } else {
+        // 🔥 place cursor AFTER last letter
+        const lastLetter = letters[letters.length - 1];
+        const rect = lastLetter.getBoundingClientRect();
+
+        cursor.style.left = (rect.right - gameRect.left) + 'px';
+        cursor.style.top = (rect.top - gameRect.top) + 'px';
+    }
 }
 
 function handleTyping(e){
-    startTimer()
+    
     const wordElements = document.querySelectorAll('.word');
     const currentWord = wordElements[currentWordIndex];
     const letters = currentWord.querySelectorAll('.letter');
@@ -118,8 +171,11 @@ function handleTyping(e){
     const key = e.key;
 
     if(key.length === 1 && key !== ' '){
+        totalTyped++;
+
         if(key === letters[currentLetterIndex].textContent){
             letters[currentLetterIndex].classList.add('correct');
+            totalCorrect++;
         } else {
             letters[currentLetterIndex].classList.add('incorrect');
         }
@@ -143,9 +199,16 @@ function handleTyping(e){
 
         if(correctLetters === totalLetters){
             score += 10;
+            wordsTyped++;
+
+            if(wordsTyped % 5 === 0){
+                level++;
+                document.querySelector('#level').textContent = level;
+            }
         }
         document.querySelector('#score').textContent = score;
         currentWordIndex++;
         currentLetterIndex = 0;
     }
+    moveCursor();
 }
